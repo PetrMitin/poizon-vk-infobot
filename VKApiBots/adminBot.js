@@ -19,7 +19,7 @@ adminBot.hear(new RegExp('/pzadmin'), async (context) => {
 adminBot.hear(new RegExp('Управлять админами'), async (context) => {
     if (!isAdmin(context.senderId)) return
     if (context.isOutbox) return
-    return context.send('Чё надо по админам?', {
+    return await context.send('Чё надо по админам?', {
         keyboard: adminAdminychKeyboard
     })
 })

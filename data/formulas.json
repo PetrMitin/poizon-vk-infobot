@@ -1,1 +1,1 @@
-{"yuan":10,"delivery-location":{"moscow-delivery":{"k":1.5,"b":2000},"poizon-delivery":{"k":1.75,"b":1750}},"item-types":{"sneakers":{"k":2,"b":2000},"bombers":{"k":2.25,"b":2250},"tshirts":{"k":2.5,"b":2500},"socks":{"k":2.75,"b":2750},"other-stuff":{"k":3,"b":3000}}}
+{"yuan":9.5,"delivery-location":{"moscow-delivery":{"k":1,"b":0},"poizon-delivery":{"k":1,"b":0}},"item-types":{"sneakers":{"k":1,"b":1500},"bombers":{"k":1,"b":1500},"tshirts":{"k":1,"b":1000},"socks":{"k":1,"b":1000},"other-stuff":{"k":1,"b":1000}}}

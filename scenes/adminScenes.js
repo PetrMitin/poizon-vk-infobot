@@ -7,8 +7,9 @@ const addAdminScene = new StepScene('add-admin', [
     async (context) => {
         if (!isAdmin(context.senderId)) return await context.scene.leave()
         if (context.scene.step.firstTime || !context.text) {
-            return await context.send('Введи id нового админа')
+            return context.send('Введи id нового админа')
         }
+        if (context.isOutbox) return
         const newAdminId = parseInt(context.text)
         console.log(newAdminId);
         addNewAdmin(newAdminId)
@@ -21,8 +22,9 @@ const deleteAdminScene = new StepScene('delete-admin', [
     async (context) => {
         if (!isAdmin(context.senderId)) return await context.scene.leave()
         if (context.scene.step.firstTime || !context.text) {
-            return await context.send('Введи id админа для экзекуции')
+            return context.send('Введи id админа для экзекуции')
         }
+        if (context.isOutbox) return
         const adminId = parseInt(context.text)
         deleteAdmin(adminId)
         await context.send('Админ стёрт с лица БД, мои поздравления')
@@ -48,7 +50,7 @@ const editFormulasScene =  new StepScene('edit-formulas', [
     async (context) => {
         if (!isAdmin(context.senderId)) return await context.scene.leave()
         if (context.scene.step.firstTime || !context.text) {
-            return await context.send('Какой раздел формул ты хочешь отредачить, мой шаловливый админ?', {
+            return context.send('Какой раздел формул ты хочешь отредачить, мой шаловливый админ?', {
                 keyboard: formulasTypeKeyboard
             })
         }
@@ -63,7 +65,7 @@ const editFormulasScene =  new StepScene('edit-formulas', [
         if (!isAdmin(context.senderId)) return await context.scene.leave()
         console.log(context);
         if (context.scene.step.firstTime || !context.text) {
-            return await context.send('Выбери формулу, которую хочешь отредачить', {
+            return context.send('Выбери формулу, которую хочешь отредачить', {
                 keyboard: context.scene.state.formulaType === 'item-types' 
                                                                 ? itemTypesKeyboard 
                                                                 : deliveryTypesFormulasKeyboard
@@ -79,7 +81,7 @@ const editFormulasScene =  new StepScene('edit-formulas', [
     async (context) => {
         if (!isAdmin(context.senderId)) return await context.scene.leave()
         if (context.scene.step.firstTime || !context.text) {
-            return await context.send('Введи коэффициент, на который умножается исходный цена (если есть только фиксированная прибавка к стоимости, введи 1)')
+            return context.send('Введи коэффициент, на который умножается исходный цена (если есть только фиксированная прибавка к стоимости, введи 1)')
         }
         if (context.isOutbox) return
         const k = parseFloat(context.text)
@@ -90,7 +92,7 @@ const editFormulasScene =  new StepScene('edit-formulas', [
     async (context) => {
         if (!isAdmin(context.senderId)) return await context.scene.leave()
         if (context.scene.step.firstTime || !context.text) {
-            return await context.send('Введи фиксированную прибавку к стоимости в рублях (если нет прибавки, введи 0)')
+            return context.send('Введи фиксированную прибавку к стоимости в рублях (если нет прибавки, введи 0)')
         }
         if (context.isOutbox) return
         const b = parseFloat(context.text)
@@ -111,7 +113,7 @@ const setYuanScene = new StepScene('set-yuan', [
     async (context) => {
         if (!isAdmin(context.senderId)) return await context.scene.leave()
         if (context.scene.step.firstTime || !context.text) {
-            return await context.send('Введи новый курс юаня')
+            return context.send('Введи новый курс юаня')
         }
         if (context.isOutbox) return
         const newYuan = parseFloat(context.text)
@@ -126,7 +128,7 @@ const sendNotificationsScene = new StepScene('send-notifications', [
         if (!isAdmin(context.senderId)) return await context.scene.leave()
         console.log(context);
         if (context.scene.step.firstTime || !context.text) {
-            return await context.send('Введи текст рассылки')
+            return context.send('Введи текст рассылки')
         } else {
             if (context.isOutbox) return
             const notificationText = context.text
@@ -138,7 +140,7 @@ const sendNotificationsScene = new StepScene('send-notifications', [
     async (context) => {
         if (!isAdmin(context.senderId)) return await context.scene.leave()
         if (context.scene.step.firstTime || !context.text) {
-            return await context.send('Рассылаем?', {
+            return context.send('Рассылаем?', {
                 keyboard: yesOrNoKeyboard
             })
         } else {
