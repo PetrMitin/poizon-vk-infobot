@@ -48,7 +48,7 @@ const userScenes = [
             return await context.scene.step.next()
         },
         async (context) => {
-            if (!context.scene.step.firstTime) {
+            if (!context.scene.step.firstTime || context.isOutbox) {
                 return context.scene.leave()
             }
             const {deliveryLocation, itemType, price} = context.scene.state
