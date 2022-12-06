@@ -8,7 +8,7 @@ const adminBot = new HearManager()
 
 adminBot.hear(new RegExp('/pzadmin'), async (context) => {
     if (!isAdmin(context.senderId)) return
-    if (message.isOutbox) return
+    if (context.isOutbox) return
     return context.send('Чё надо?', {
         keyboard: adminPannelKeyboard
     })
@@ -18,7 +18,7 @@ adminBot.hear(new RegExp('/pzadmin'), async (context) => {
 
 adminBot.hear(new RegExp('Управлять админами'), async (context) => {
     if (!isAdmin(context.senderId)) return
-    if (message.isOutbox) return
+    if (context.isOutbox) return
     return context.send('Чё надо по админам?', {
         keyboard: adminAdminychKeyboard
     })
