@@ -19,7 +19,7 @@ const userScenes = [
         },
         async (context) => {
             if (context.scene.step.firstTime) {
-                return await context.send('⬇️ Выберите тип товара ⬇️', {
+                return context.send('⬇️ Выберите тип товара ⬇️', {
                     keyboard: itemTypeKeyboard
                 })
             } else if (!context.scene.step.firstTime && (!context.text || context.isOutbox)) {
