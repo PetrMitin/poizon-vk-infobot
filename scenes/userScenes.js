@@ -5,10 +5,12 @@ const {countTotalItemPrice} = require('../utils/utils')
 const userScenes = [
     new StepScene('count-price', [
         async (context) => {
-            if (context.scene.step.firstTime || !context.text) {
+            if (context.scene.step.firstTime) {
                 return context.send('📲 Вы рассчитываете стоимость товара с POIZONA или нашего Московского склада?', {
                     keyboard: poizonOrMscKeyboard
                 })
+            } else if (!context.scene.step.firstTime && !context.text) {
+                return
             }
             console.log(context);
             const deliveryLocation = context.messagePayload.type
@@ -16,10 +18,12 @@ const userScenes = [
             return await context.scene.step.next()
         },
         async (context) => {
-            if (context.scene.step.firstTime || !context.text) {
+            if (context.scene.step.firstTime) {
                 return await context.send('⬇️ Выберите тип товара ⬇️', {
                     keyboard: itemTypeKeyboard
                 })
+            } else if (!context.scene.step.firstTime && !context.text) {
+                return
             }
             const itemType = context.messagePayload.type || context.messagePayload.command
             if (itemType === '/back-to-start') {
@@ -30,10 +34,12 @@ const userScenes = [
             return await context.scene.step.next()
         },
         async (context) => {
-            if (context.scene.step.firstTime || !context.text) {
+            if (context.scene.step.firstTime) {
                 return context.send(`📲 Напишите цену товара в Юанях (¥), если вы выбираете товар с POIZONA 
                 ИЛИ 
                 📲 Напишите цену товара в Рублях (₽), если вы выбираете товар с нашего склада в Москве`)
+            } else if (!context.scene.step.firstTime && !context.text) {
+                return
             }
             console.log(context);
             if (context.isOutbox) return
