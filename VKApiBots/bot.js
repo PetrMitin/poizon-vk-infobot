@@ -17,6 +17,7 @@ bot.onFallback((message) => {
 })
 
 bot.hear(new RegExp('/start'), (message) => {
+    if (message.isOutbox && message.messagePayload.command !== '/back-to-start') return
     message.send({
         message: `Доброго времени суток! 🙋🏼‍♂️\n
         ~ Обращаем ваше внимание, что все заказы оформляются 24/7 ✅\n
@@ -27,6 +28,7 @@ bot.hear(new RegExp('/start'), (message) => {
 })
 
 bot.hear(new RegExp('О Нас🙋🏼‍♀️'), async (message) => {
+    if (message.isOutbox) return
     return await message.send(
         {
             message: `📲 Наша команда доставляет одежду с официального Китайского магазина “POIZON”. Но с 20 ноября появилась возможность заказывать «определенный» товар со склада POIZON в Москве. Доставки до 6 дней и без завышения цен.
@@ -39,6 +41,7 @@ bot.hear(new RegExp('О Нас🙋🏼‍♀️'), async (message) => {
 })
 
 bot.hear(new RegExp('Что такое POIZON?'), async (message) => {
+    if (message.isOutbox) return
     return await message.send(
         {
             message: ` • POIZON - магазин в Китае 🏬
@@ -50,6 +53,7 @@ bot.hear(new RegExp('Что такое POIZON?'), async (message) => {
 })
 
 bot.hear(new RegExp('Как скачать POIZON?'), async (message) => {
+    if (message.isOutbox) return
     return await message.send(
         {
             message: `Скачать POIZON 👇🏼
@@ -65,6 +69,7 @@ bot.hear(new RegExp('Как скачать POIZON?'), async (message) => {
 })
 
 bot.hear(new RegExp('Как заказать?'), async (message) => {
+    if (message.isOutbox) return
     return await message.send(
         {
             message: `🚚 Алгоритм Ваших действий для заказа товара:
@@ -81,6 +86,7 @@ bot.hear(new RegExp('Как заказать?'), async (message) => {
 })
 
 bot.hear(new RegExp('Связаться с Менеджером'), async (message) => {
+    if (message.isOutbox) return
     return await message.send(
         {
             message: `📲 Напишите сообщение сюда, менеджер скоро ответит `
@@ -92,6 +98,7 @@ bot.hear(new RegExp('Рассчитать стоимость'), async (message) 
 })
 
 bot.hear(new RegExp('Назад'), (message) => {
+    if (message.isOutbox) return
     if (message.payload === '/back-to-start') {
         message.send({
             message: '/start'
