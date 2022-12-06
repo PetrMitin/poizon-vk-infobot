@@ -1,7 +1,7 @@
 const { StepScene } = require(`@vk-io/scenes`);
 const { isAdmin } = require("../utils/utils");
 const { addNewAdmin, deleteAdmin, getAllAdmins, sendNotifications, editFormula, setYuan } = require('../utils/adminFunctions');
-const { formulasTypeKeyboard, deliveryTypesFormulasKeyboard, itemTypesKeyboard } = require("../keyboards/adminKeyboards");
+const { formulasTypeKeyboard, deliveryTypesFormulasKeyboard, itemTypesKeyboard, yesOrNoKeyboard } = require("../keyboards/adminKeyboards");
 
 const addAdminScene = new StepScene('add-admin', [
     async (context) => {
@@ -135,6 +135,22 @@ const sendNotificationsScene = new StepScene('send-notifications', [
             return context.scene.step.next()
         }
     }, 
+    async (context) => {
+        if (!isAdmin(context.senderId)) return await context.scene.leave()
+        if (context.scene.step.firstTime || !context.text) {
+            return await context.send('Рассылаем?', {
+                keyboard: yesOrNoKeyboard
+            })
+        } else {
+            if (context.isOutbox) return
+            const notificationConfirmation = context.messagePayload.command === '/confirm-send'
+            if (!notificationConfirmation) {
+                await context.send('Отменяем')
+                return await context.scene.leave()
+            }
+            return context.scene.step.next()
+        }
+    },
     async (context) => {
         if (context.scene.step.firstTime) {
             const notificationText = context.scene.state.notificationText
