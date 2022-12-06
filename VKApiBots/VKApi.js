@@ -4,9 +4,9 @@ require('dotenv').config({
 })
 const {VK} = require('vk-io')
 const { SessionManager } = require(`@vk-io/session`);
-const sceneManager = require('../scenes/sceneManager')
-const bot = require('./bot')
-const adminBot = require('./adminBot')
+const sceneManager = require(path.resolve(__dirname, '..', 'scenes', 'sceneManager.js'))
+const bot = require(path.resolve(__dirname, 'bot.js'))
+const adminBot = require(path.resolve(__dirname, 'adminBot.js'))
 
 const token = process.env.VK_API_TOKEN
 const vkInstance = new VK({
