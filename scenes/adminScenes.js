@@ -113,6 +113,9 @@ const editFormulasScene =  new StepScene('edit-formulas', [
     },
 
     async (context) => {
+        if (!context.scene.step.firstTime) {
+            return context.scene.leave()
+        }
         if (!isAdmin(context.senderId)) return await context.scene.leave()
         const {formulaType, specificFormula, k, b} = context.scene.state
         editFormula(formulaType, specificFormula, k, b)

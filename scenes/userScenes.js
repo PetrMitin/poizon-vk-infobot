@@ -48,12 +48,15 @@ const userScenes = [
             return await context.scene.step.next()
         },
         async (context) => {
+            if (!context.scene.step.firstTime) {
+                return context.scene.leave()
+            }
             const {deliveryLocation, itemType, price} = context.scene.state
             const totalPrice = countTotalItemPrice(deliveryLocation, itemType, price)
             await context.send(`📲 Итоговая сумма оплаты с доставкой до Москвы: ${totalPrice}₽
             Обращаем ваше внимание: итоговая цена может меняться в зависимости от деталей доставки и самого заказа.
             Все подробности уточняйте у менеджера!`)
-            return await context.scene.leave()
+            return context.scene.leave()
         }
     ])
 ]
