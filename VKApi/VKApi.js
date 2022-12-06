@@ -20,7 +20,7 @@ const sessionManager = new SessionManager()
 vkInstance.updates.on(`message_new`, sessionManager.middleware);
 vkInstance.updates.on(`message_new`, sceneManager.middleware);
 vkInstance.updates.on(`message_new`, sceneManager.middlewareIntercept);
-vkInstance.updates.on('message_new', bot.middleware)
 vkInstance.updates.on('message_new', adminBot.middleware)
+vkInstance.updates.on('message_new', bot.middleware)
 
 module.exports = vkInstance
