@@ -5,31 +5,19 @@ const { addUser } = require('../utils/adminFunctions')
 
 const bot = new HearManager()
 
-bot.onFallback((message) => {
-    if (message.isOutbox) return
-    message.send({
-        message: `Доброго времени суток! 🙋🏼‍♂️\n
-        ~ Обращаем ваше внимание, что все заказы оформляются 24/7 ✅\n
-        ~ Здесь вы можете получить подробную информацию и связаться с Менеджером, который ответит на любой ваш вопрос!`,
-        keyboard: startKeyboard
-    })
-    addUser(message.senderId)
-})
-
 bot.hear(new RegExp('/start'), (message) => {
-    if (message.isOutbox && message.messagePayload.command !== '/back-to-start') return
-    message.send({
+    addUser(message.senderId)
+    return message.send({
         message: `Доброго времени суток! 🙋🏼‍♂️\n
         ~ Обращаем ваше внимание, что все заказы оформляются 24/7 ✅\n
         ~ Здесь вы можете получить подробную информацию и связаться с Менеджером, который ответит на любой ваш вопрос!`,
         keyboard: startKeyboard
     })
-    addUser(message.senderId)
 })
 
 bot.hear(new RegExp('О Нас🙋🏼‍♀️'), async (message) => {
     if (message.isOutbox) return
-    return await message.send(
+    return message.send(
         {
             message: `📲 Наша команда доставляет одежду с официального Китайского магазина “POIZON”. Но с 20 ноября появилась возможность заказывать «определенный» товар со склада POIZON в Москве. Доставки до 6 дней и без завышения цен.
             \n~ В Китае любой бренд в разы дешевле, чем в России. В “POIZON” есть абсолютно любой бренд и СТРОГО оригинал! Весь товар проходит легит-чек ✅
@@ -42,7 +30,7 @@ bot.hear(new RegExp('О Нас🙋🏼‍♀️'), async (message) => {
 
 bot.hear(new RegExp('Что такое POIZON?'), async (message) => {
     if (message.isOutbox) return
-    return await message.send(
+    return message.send(
         {
             message: ` • POIZON - магазин в Китае 🏬
             \n • Там есть ВСЁ / Одежда, гаджеты, машины и т. д.
@@ -54,7 +42,7 @@ bot.hear(new RegExp('Что такое POIZON?'), async (message) => {
 
 bot.hear(new RegExp('Как скачать POIZON?'), async (message) => {
     if (message.isOutbox) return
-    return await message.send(
+    return message.send(
         {
             message: `Скачать POIZON 👇🏼
             \nДля IOS - https://apps.apple.com/app/id1012871328
@@ -70,7 +58,7 @@ bot.hear(new RegExp('Как скачать POIZON?'), async (message) => {
 
 bot.hear(new RegExp('Как заказать?'), async (message) => {
     if (message.isOutbox) return
-    return await message.send(
+    return message.send(
         {
             message: `🚚 Алгоритм Ваших действий для заказа товара:
             \n1. Клиент выбирает на POIZONE товар (или со склада в Москве)
@@ -87,27 +75,32 @@ bot.hear(new RegExp('Как заказать?'), async (message) => {
 
 bot.hear(new RegExp('Связаться с Менеджером'), async (message) => {
     if (message.isOutbox) return
-    return await message.send(
+    return message.send(
         {
             message: `📲 Напишите сообщение сюда, менеджер скоро ответит `
         }
     )
 })
+
 bot.hear(new RegExp('Рассчитать стоимость'), async (message) => {
     return await message.scene.enter('count-price')
 })
 
-bot.hear(new RegExp('Назад'), (message) => {
+bot.hear(/^Назад$/, (message) => {
     if (message.isOutbox) return
-    if (message.payload === '/back-to-start') {
-        message.send({
-            message: '/start'
-        })
-    } else {
-        message.send({
-            message: '/start'
-        })
-    }
+    return message.send({
+        message: '/start'
+    })
+})
+
+bot.onFallback((message) => {
+    if (message.isOutbox) return
+    return message.send({
+        message: `Доброго времени суток! 🙋🏼‍♂️\n
+        ~ Обращаем ваше внимание, что все заказы оформляются 24/7 ✅\n
+        ~ Здесь вы можете получить подробную информацию и связаться с Менеджером, который ответит на любой ваш вопрос!`,
+        keyboard: startKeyboard
+    })
 })
 
 module.exports = bot
