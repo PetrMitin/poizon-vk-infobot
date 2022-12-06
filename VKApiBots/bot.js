@@ -6,6 +6,7 @@ const { addUser } = require('../utils/adminFunctions')
 const bot = new HearManager()
 
 bot.onFallback((message) => {
+    if (message.isOutbox) return
     message.send({
         message: `Доброго времени суток! 🙋🏼‍♂️\n
         ~ Обращаем ваше внимание, что все заказы оформляются 24/7 ✅\n
