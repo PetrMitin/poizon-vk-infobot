@@ -9,7 +9,7 @@ const userScenes = [
                 return context.send('📲 Вы рассчитываете стоимость товара с POIZONA или нашего Московского склада?', {
                     keyboard: poizonOrMscKeyboard
                 })
-            } else if (!context.scene.step.firstTime && !context.text) {
+            } else if (!context.scene.step.firstTime && (!context.text || context.isOutbox)) {
                 return
             }
             console.log(context);
@@ -22,7 +22,7 @@ const userScenes = [
                 return await context.send('⬇️ Выберите тип товара ⬇️', {
                     keyboard: itemTypeKeyboard
                 })
-            } else if (!context.scene.step.firstTime && !context.text) {
+            } else if (!context.scene.step.firstTime && (!context.text || context.isOutbox)) {
                 return
             }
             const itemType = context.messagePayload?.type || context.messagePayload?.command || '/back-to-start'
@@ -38,7 +38,7 @@ const userScenes = [
                 return context.send(`📲 Напишите цену товара в Юанях (¥), если вы выбираете товар с POIZONA 
                 ИЛИ 
                 📲 Напишите цену товара в Рублях (₽), если вы выбираете товар с нашего склада в Москве`)
-            } else if (!context.scene.step.firstTime && !context.text) {
+            } else if (!context.scene.step.firstTime && (!context.text || context.isOutbox)) {
                 return
             }
             console.log(context);
