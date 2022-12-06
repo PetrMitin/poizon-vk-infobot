@@ -25,7 +25,7 @@ const userScenes = [
             } else if (!context.scene.step.firstTime && !context.text) {
                 return
             }
-            const itemType = context.messagePayload.type || context.messagePayload.command
+            const itemType = context.messagePayload?.type || context.messagePayload?.command || '/back-to-start'
             if (itemType === '/back-to-start') {
                 await context.scene.leave()
                 return context.send('/start')
