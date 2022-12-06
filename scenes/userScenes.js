@@ -38,7 +38,7 @@ const userScenes = [
                 return context.send(`📲 Напишите цену товара в Юанях (¥), если вы выбираете товар с POIZONA 
                 ИЛИ 
                 📲 Напишите цену товара в Рублях (₽), если вы выбираете товар с нашего склада в Москве`)
-            } else if (!context.scene.step.firstTime && !context.text) {
+            } else if (!context.scene.step.firstTime && (!context.text || context.isOutbox)) {
                 return
             }
             console.log(context);
