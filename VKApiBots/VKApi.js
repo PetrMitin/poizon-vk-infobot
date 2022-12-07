@@ -17,6 +17,11 @@ const vkInstance = new VK({
 
 const sessionManager = new SessionManager()
 
+vkInstance.updates.on(`message_new`, (message, next) => {
+    console.log(message);
+    if (message.peerType === 'group' || message.peerType === 'chat') return
+    return next()
+});
 vkInstance.updates.on(`message_new`, sessionManager.middleware);
 vkInstance.updates.on(`message_new`, sceneManager.middleware);
 vkInstance.updates.on(`message_new`, sceneManager.middlewareIntercept);
